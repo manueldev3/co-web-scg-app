@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 import "./globals.css";
+import SiteHeader from "./components/SiteHeader";
+import SCGLayout from "./components/SCGLayout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +30,18 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <AntdRegistry>
+          <SCGLayout>
+            <div className="h-10 flex items-center px-4 bg-[#0F2C3E]">
+              <span className="text-[#82919E]">Guía de Star Citizen</span>
+            </div>
+            <hr className="border-gray-700" />
+            <SiteHeader />
+            {children}
+          </SCGLayout>
+        </AntdRegistry>
+      </body>
     </html>
   );
 }
