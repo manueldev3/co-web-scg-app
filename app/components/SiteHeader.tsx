@@ -29,7 +29,7 @@ export default function SiteHeader() {
           className="flex space-x-2 items-center"
         >
           <LoginOutlined color="#82919E" />
-          {window != null && window.screen.width > 768 && (
+          {window && window.screen.width > 768 && (
             <span className="text-[#82919E] hover:text-[#BCBEC0] no-underline">
               INICIAR SESIÓN
             </span>
