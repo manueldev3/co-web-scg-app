@@ -10,8 +10,15 @@ export default function SiteHeader() {
   const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
-    // Esto solo se ejecuta en el cliente (navegador)
-    setIsDesktop(window.innerWidth > 768);
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth > 768);
+    };
+
+    // Set initial value
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
