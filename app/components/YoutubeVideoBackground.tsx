@@ -33,7 +33,7 @@ export default function YoutubeBackground({
   };
 
   return (
-    <div className="relative w-full min-h-[88.9vh] overflow-hidden">
+    <div className="relative w-full min-h-[80vh] lg:min-h-[88.9vh] overflow-hidden">
       {/* Contenedor del Player que fuerza la proporción 16:9 de fondo tipo 'cover' */}
       <div className="fixed top-0 left-0 w-full h-screen pointer-events-none z-[-1]">
         <div className="absolute top-1/2 left-1/2 w-screen h-[56.25vw] min-h-screen min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2">
@@ -48,7 +48,7 @@ export default function YoutubeBackground({
       </div>
 
       {/* Capa oscura para legibilidad del texto */}
-      <div className="relative z-10 min-h-[88.9vh] bg-[#0A1D29]/50 text-white p-8">
+      <div className="relative z-10 min-h-[80vh] lg:min-h-[88.9vh] bg-[#0A1D29]/50 text-white p-8">
         {children}
       </div>
     </div>
