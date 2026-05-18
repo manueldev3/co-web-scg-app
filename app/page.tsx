@@ -8,12 +8,12 @@ const Home = () => {
     <div>
       <main>
         <YoutubeBackground>
-          <div className="min-w-screen min-h-[82vh] flex flex-col justify-end items-start p-8 pb-20 space-y-10">
-            <div className="flex flex-col items-start">
-              <h1 className="text-6xl font-bold tracking-wider text-white drop-shadow-md">
+          <div className="lg:min-w-screen min-h-[82vh] flex flex-col justify-end items-center lg:items-start p-8 pb-20 space-y-10">
+            <div className="flex flex-col items-center lg:items-start">
+              <h1 className="text-4xl text-center lg:text-start lg:text-6xl font-bold tracking-wider text-white drop-shadow-md">
                 Comercion Lucrativo
               </h1>
-              <p className="mt-4 text-lg text-gray-200">
+              <p className="mt-4 text-center lg:text-start lg:text-lg text-gray-200">
                 Haste millonario en la nueva Alpha 4.8, Visita nuestra
                 calculadora de rutas y materiales
               </p>

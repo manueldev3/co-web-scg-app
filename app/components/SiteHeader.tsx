@@ -11,7 +11,7 @@ export default function SiteHeader() {
       <div className="flex items-center space-x-8">
         <span className="text-5xl font-bold text-[#BCBEC0]">SCG</span>
         <Menu
-          className="min-w-2xl"
+          className="invisible lg:visible lg:min-w-2xl"
           theme="dark"
           mode="horizontal"
           defaultSelectedKeys={["1"]}
