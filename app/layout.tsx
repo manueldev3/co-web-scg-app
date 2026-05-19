@@ -4,6 +4,7 @@ import { AntdRegistry } from "@ant-design/nextjs-registry";
 import "./globals.css";
 import SiteHeader from "./components/SiteHeader";
 import SCGLayout from "./components/SCGLayout";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,9 +28,18 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        {/* 2. Colocas el script de Google dentro de <head> o directamente en el body */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5806249940542763"
+          crossOrigin="anonymous"
+          strategy="afterInteractive" // Controla cuándo se carga (opcional)
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         <AntdRegistry>
           <SCGLayout>
