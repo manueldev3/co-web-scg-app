@@ -7,43 +7,20 @@ import { useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { CommodityOption } from "./types";
 
-const Mercancia = () => {
+interface Props {
+  commoditiesList: CommodityOption[];
+}
+
+const Mercancia = ({ commoditiesList }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
-
-  const [commoditiesList, setCommoditiesList] = useState<CommodityOption[]>([]);
-  const [searchValue, setSearchValue] = useState("");
-  const [loading, setLoading] = useState(true);
 
   const currentSlug = useMemo(() => {
     const segments = pathname.split("/");
     return segments.length > 2 ? segments[2] : undefined;
   }, [pathname]);
 
-  // Fetch commodities list from UEX API
-  useEffect(() => {
-    fetch("https://api.uexcorp.space/2.0/commodities", {
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_UEX_API_TOKEN}`,
-        Accept: "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        const list: CommodityOption[] = (data.data || []).map(
-          (item: { id: number; name: string }) => ({
-            id: item.id,
-            name: item.name,
-            slug: item.name.toLowerCase().replace(/\s+/g, "-"),
-          }),
-        );
-        setCommoditiesList(list);
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  }, []);
+  const [searchValue, setSearchValue] = useState("");
 
   // Sync search value with URL changes
   useEffect(() => {
@@ -56,7 +33,7 @@ const Mercancia = () => {
   }, [currentSlug, commoditiesList]);
 
   const options = useMemo<AutoCompleteProps["options"]>(() => {
-    if (!searchValue || loading) return [];
+    if (!searchValue) return [];
 
     return commoditiesList
       .filter((item) =>
@@ -71,7 +48,7 @@ const Mercancia = () => {
         ),
         key: item.id,
       }));
-  }, [commoditiesList, searchValue, loading]);
+  }, [commoditiesList, searchValue]);
 
   const onSelect = (value: string) => {
     const commodity = commoditiesList.find((item) => item.name === value);
@@ -103,11 +80,7 @@ const Mercancia = () => {
           >
             <Input
               size="large"
-              placeholder={
-                loading
-                  ? "Cargando mercancías..."
-                  : "Buscar mercancía por nombre..."
-              }
+              placeholder="Buscar mercancía por nombre..."
               prefix={<SearchOutlined className="text-[#4a9eda]" />}
               suffix={
                 <CloseCircleFilled
@@ -116,7 +89,6 @@ const Mercancia = () => {
                   style={{ visibility: searchValue ? "visible" : "hidden" }}
                 />
               }
-              disabled={loading}
             />
           </AutoComplete>
         </div>
