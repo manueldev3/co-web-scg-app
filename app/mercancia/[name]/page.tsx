@@ -1,66 +1,87 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import { separateRecords } from "../utils";
-import { ApiPriceRecord } from "../types";
+import { ApiPriceRecord, TerminalPriceRecord } from "../types";
 import DetalleMercancia from "../DetalleMercancia";
 
-export default async function CommodityDetailPage({
-  params,
-}: {
-  params: Promise<{ name: string }>;
-}) {
-  const { name } = await params;
-  const commodityNameQuery = name.replace(/-/g, " ");
+const API_TOKEN = "75b886332a4171cd7efb1093446ca37ff372e241";
 
-  try {
-    const result = await fetch(
+export default function CommodityDetailPage() {
+  const params = useParams<{ name: string }>();
+  const slug = params.name;
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [commodityName, setCommodityName] = useState("");
+  const [sellers, setSellers] = useState<TerminalPriceRecord[]>([]);
+  const [buyers, setBuyers] = useState<TerminalPriceRecord[]>([]);
+
+  useEffect(() => {
+    if (!slug) return;
+
+    const commodityNameQuery = slug.replace(/-/g, " ");
+
+    setLoading(true);
+    setError(null);
+
+    fetch(
       `https://api.uexcorp.space/2.0/commodities_prices?commodity_name=${encodeURIComponent(commodityNameQuery)}`,
       {
         headers: {
-          Authorization: `Bearer ${process.env.UEX_API_TOKEN}`,
+          Authorization: `Bearer ${API_TOKEN}`,
           Accept: "application/json",
         },
       },
-    );
+    )
+      .then((res) => {
+        if (!res.ok) throw new Error("API error");
+        return res.json();
+      })
+      .then((data) => {
+        const records: ApiPriceRecord[] = data.data || [];
 
-    if (!result.ok) {
-      return (
-        <div className="flex flex-col items-center justify-center py-16 px-4">
-          <p className="text-gray-500 text-center text-lg">
-            No se encontraron datos para esta mercancía
-          </p>
-        </div>
-      );
-    }
+        if (records.length === 0) {
+          setError("No se encontraron datos para esta mercancía");
+          setLoading(false);
+          return;
+        }
 
-    const jsonData = await result.json();
-    const records: ApiPriceRecord[] = jsonData.data || [];
+        const { sellers, buyers } = separateRecords(records);
+        setCommodityName(records[0].commodity_name);
+        setSellers(sellers);
+        setBuyers(buyers);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError("Error de conexión. Intenta de nuevo.");
+        setLoading(false);
+      });
+  }, [slug]);
 
-    if (records.length === 0) {
-      return (
-        <div className="flex flex-col items-center justify-center py-16 px-4">
-          <p className="text-gray-500 text-center text-lg">
-            No se encontraron datos para esta mercancía
-          </p>
-        </div>
-      );
-    }
-
-    const { sellers, buyers } = separateRecords(records);
-    const commodityName = records[0].commodity_name;
-
+  if (loading) {
     return (
-      <DetalleMercancia
-        commodityName={commodityName}
-        sellers={sellers}
-        buyers={buyers}
-      />
-    );
-  } catch {
-    return (
-      <div className="flex flex-col items-center justify-center py-16 px-4">
-        <p className="text-gray-500 text-center text-lg">
-          Error de conexión. Intenta de nuevo.
-        </p>
+      <div className="flex flex-col items-center justify-center py-24 px-4">
+        <div className="animate-spin rounded-full h-10 w-10 border-2 border-[#1e4a6e] border-t-[#9ED0FA] mb-4" />
+        <p className="text-gray-400 text-center">Cargando precios...</p>
       </div>
     );
   }
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center py-16 px-4">
+        <p className="text-gray-500 text-center text-lg">{error}</p>
+      </div>
+    );
+  }
+
+  return (
+    <DetalleMercancia
+      commodityName={commodityName}
+      sellers={sellers}
+      buyers={buyers}
+    />
+  );
 }

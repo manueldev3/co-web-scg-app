@@ -7,32 +7,58 @@ import { useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { CommodityOption } from "./types";
 
-interface Props {
-  commoditiesList: CommodityOption[];
-}
+const API_TOKEN = "75b886332a4171cd7efb1093446ca37ff372e241";
 
-const Mercancia = ({ commoditiesList }: Props) => {
+const Mercancia = () => {
   const router = useRouter();
   const pathname = usePathname();
+
+  const [commoditiesList, setCommoditiesList] = useState<CommodityOption[]>([]);
+  const [searchValue, setSearchValue] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const currentSlug = useMemo(() => {
     const segments = pathname.split("/");
     return segments.length > 2 ? segments[2] : undefined;
   }, [pathname]);
 
-  const [searchValue, setSearchValue] = useState("");
-
+  // Fetch commodities list from client
   useEffect(() => {
-    if (currentSlug) {
+    fetch("https://api.uexcorp.space/2.0/commodities", {
+      headers: {
+        Authorization: `Bearer ${API_TOKEN}`,
+        Accept: "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const list: CommodityOption[] = (data.data || []).map(
+          (item: { id: number; name: string }) => ({
+            id: item.id,
+            name: item.name,
+            slug: item.name.toLowerCase().replace(/\s+/g, "-"),
+          }),
+        );
+        setCommoditiesList(list);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  // Sync search value with URL changes
+  useEffect(() => {
+    if (currentSlug && commoditiesList.length > 0) {
       const match = commoditiesList.find((item) => item.slug === currentSlug);
       setSearchValue(match ? match.name : "");
-    } else {
+    } else if (!currentSlug) {
       setSearchValue("");
     }
   }, [currentSlug, commoditiesList]);
 
   const options = useMemo<AutoCompleteProps["options"]>(() => {
-    if (!searchValue) return [];
+    if (!searchValue || loading) return [];
 
     return commoditiesList
       .filter((item) =>
@@ -47,7 +73,7 @@ const Mercancia = ({ commoditiesList }: Props) => {
         ),
         key: item.id,
       }));
-  }, [commoditiesList, searchValue]);
+  }, [commoditiesList, searchValue, loading]);
 
   const onSelect = (value: string) => {
     const commodity = commoditiesList.find((item) => item.name === value);
@@ -79,7 +105,11 @@ const Mercancia = ({ commoditiesList }: Props) => {
           >
             <Input
               size="large"
-              placeholder="Buscar mercancía por nombre..."
+              placeholder={
+                loading
+                  ? "Cargando mercancías..."
+                  : "Buscar mercancía por nombre..."
+              }
               prefix={<SearchOutlined className="text-[#4a9eda]" />}
               suffix={
                 <CloseCircleFilled
@@ -88,6 +118,7 @@ const Mercancia = ({ commoditiesList }: Props) => {
                   style={{ visibility: searchValue ? "visible" : "hidden" }}
                 />
               }
+              disabled={loading}
             />
           </AutoComplete>
         </div>
