@@ -7,8 +7,6 @@ import { useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { CommodityOption } from "./types";
 
-const API_TOKEN = "75b886332a4171cd7efb1093446ca37ff372e241";
-
 const Mercancia = () => {
   const router = useRouter();
   const pathname = usePathname();
@@ -22,14 +20,9 @@ const Mercancia = () => {
     return segments.length > 2 ? segments[2] : undefined;
   }, [pathname]);
 
-  // Fetch commodities list from client
+  // Fetch commodities list from our own API proxy
   useEffect(() => {
-    fetch("https://api.uexcorp.space/2.0/commodities", {
-      headers: {
-        Authorization: `Bearer ${API_TOKEN}`,
-        Accept: "application/json",
-      },
-    })
+    fetch("/api/uex/commodities")
       .then((res) => res.json())
       .then((data) => {
         const list: CommodityOption[] = (data.data || []).map(

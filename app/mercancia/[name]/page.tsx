@@ -6,8 +6,6 @@ import { separateRecords } from "../utils";
 import { ApiPriceRecord, TerminalPriceRecord } from "../types";
 import DetalleMercancia from "../DetalleMercancia";
 
-const API_TOKEN = "75b886332a4171cd7efb1093446ca37ff372e241";
-
 export default function CommodityDetailPage() {
   const params = useParams<{ name: string }>();
   const slug = params.name;
@@ -27,13 +25,7 @@ export default function CommodityDetailPage() {
     setError(null);
 
     fetch(
-      `https://api.uexcorp.space/2.0/commodities_prices?commodity_name=${encodeURIComponent(commodityNameQuery)}`,
-      {
-        headers: {
-          Authorization: `Bearer ${API_TOKEN}`,
-          Accept: "application/json",
-        },
-      },
+      `/api/uex/commodities_prices?commodity_name=${encodeURIComponent(commodityNameQuery)}`,
     )
       .then((res) => {
         if (!res.ok) throw new Error("API error");
