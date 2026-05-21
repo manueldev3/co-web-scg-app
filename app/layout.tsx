@@ -45,7 +45,7 @@ export default function RootLayout({
           strategy="afterInteractive" // Controla cuándo se carga (opcional)
         />
       </head>
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <AntdRegistry>
           <SCGLayout>
             <div className="h-10 flex items-center px-4 bg-[#0F2C3E]">

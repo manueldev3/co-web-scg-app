@@ -18,11 +18,7 @@ const Home = () => {
                 calculadora de rutas y materiales
               </p>
             </div>
-            <Button
-              type="primary"
-              size="large"
-              href="https://scg.manueldeveloper.com/app"
-            >
+            <Button type="primary" size="large" href="/mercancia">
               <span className="text-[#0A1D29] font-bold uppercase">
                 Comienza ahora
               </span>
