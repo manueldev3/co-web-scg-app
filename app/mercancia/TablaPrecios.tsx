@@ -38,7 +38,7 @@ export default function TablaPrecios({
     {
       title: (
         <span className="flex items-center gap-1">
-          <EnvironmentOutlined />
+          <EnvironmentOutlined className="text-[#9ED0FA]" />
           Ubicación
         </span>
       ),
