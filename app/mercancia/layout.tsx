@@ -12,9 +12,9 @@ export default async function MercanciaLayout({
 
   try {
     const result = await fetch("https://api.uexcorp.space/2.0/commodities", {
-      next: { revalidate: 300 },
+      cache: "no-store",
       headers: {
-        Authorization: `Bearer ${process.env.UEX_API_TOKEN}`,
+        Authorization: `Bearer ${process.env.UEX_API_TOKEN || ""}`,
         Accept: "application/json",
       },
     });
@@ -28,9 +28,11 @@ export default async function MercanciaLayout({
           slug: item.name.toLowerCase().replace(/\s+/g, "-"),
         }),
       );
+    } else {
+      console.error(`UEX API error: ${result.status} ${result.statusText}`);
     }
-  } catch {
-    // API unavailable — continue with empty list
+  } catch (error) {
+    console.error("UEX API fetch failed:", error);
   }
 
   return (
