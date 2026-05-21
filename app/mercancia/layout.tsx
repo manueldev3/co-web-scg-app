@@ -8,16 +8,30 @@ export default async function MercanciaLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const result = await fetch("https://api.uexcorp.space/2.0/commodities");
-  const jsonData = await result.json();
+  let commoditiesList: CommodityOption[] = [];
 
-  const commoditiesList: CommodityOption[] = jsonData.data.map(
-    (item: { id: number; name: string }) => ({
-      id: item.id,
-      name: item.name,
-      slug: item.name.toLowerCase().replace(/\s+/g, "-"),
-    }),
-  );
+  try {
+    const result = await fetch("https://api.uexcorp.space/2.0/commodities", {
+      next: { revalidate: 300 },
+      headers: {
+        Authorization: `Bearer ${process.env.UEX_API_TOKEN}`,
+        Accept: "application/json",
+      },
+    });
+
+    if (result.ok) {
+      const jsonData = await result.json();
+      commoditiesList = (jsonData.data || []).map(
+        (item: { id: number; name: string }) => ({
+          id: item.id,
+          name: item.name,
+          slug: item.name.toLowerCase().replace(/\s+/g, "-"),
+        }),
+      );
+    }
+  } catch {
+    // API unavailable — continue with empty list
+  }
 
   return (
     <>

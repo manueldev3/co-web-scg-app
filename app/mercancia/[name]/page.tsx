@@ -13,6 +13,12 @@ export default async function CommodityDetailPage({
   try {
     const result = await fetch(
       `https://api.uexcorp.space/2.0/commodities_prices?commodity_name=${encodeURIComponent(commodityNameQuery)}`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.UEX_API_TOKEN}`,
+          Accept: "application/json",
+        },
+      },
     );
 
     if (!result.ok) {
