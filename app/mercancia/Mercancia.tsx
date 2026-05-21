@@ -20,9 +20,14 @@ const Mercancia = () => {
     return segments.length > 2 ? segments[2] : undefined;
   }, [pathname]);
 
-  // Fetch commodities list from our own API proxy
+  // Fetch commodities list from UEX API
   useEffect(() => {
-    fetch("/api/uex/commodities")
+    fetch("https://api.uexcorp.space/2.0/commodities", {
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_UEX_API_TOKEN}`,
+        Accept: "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         const list: CommodityOption[] = (data.data || []).map(

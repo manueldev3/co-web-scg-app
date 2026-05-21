@@ -25,7 +25,13 @@ export default function CommodityDetailPage() {
     setError(null);
 
     fetch(
-      `/api/uex/commodities_prices?commodity_name=${encodeURIComponent(commodityNameQuery)}`,
+      `https://api.uexcorp.space/2.0/commodities_prices?commodity_name=${encodeURIComponent(commodityNameQuery)}`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_UEX_API_TOKEN}`,
+          Accept: "application/json",
+        },
+      },
     )
       .then((res) => {
         if (!res.ok) throw new Error("API error");
