@@ -3,7 +3,7 @@
 import { SearchOutlined, CloseCircleFilled } from "@ant-design/icons";
 import { AutoComplete, Input } from "antd";
 import type { AutoCompleteProps } from "antd";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { CommodityOption } from "./types";
 
@@ -20,17 +20,16 @@ const Mercancia = ({ commoditiesList }: Props) => {
     return segments.length > 2 ? segments[2] : undefined;
   }, [pathname]);
 
-  const [searchValue, setSearchValue] = useState("");
+  const [inputValue, setInputValue] = useState<string | null>(null);
 
-  // Sync search value with URL changes
-  useEffect(() => {
+  const searchValue = useMemo(() => {
+    if (inputValue !== null) return inputValue;
     if (currentSlug && commoditiesList.length > 0) {
       const match = commoditiesList.find((item) => item.slug === currentSlug);
-      setSearchValue(match ? match.name : "");
-    } else if (!currentSlug) {
-      setSearchValue("");
+      return match ? match.name : "";
     }
-  }, [currentSlug, commoditiesList]);
+    return "";
+  }, [currentSlug, commoditiesList, inputValue]);
 
   const options = useMemo<AutoCompleteProps["options"]>(() => {
     if (!searchValue) return [];
@@ -53,13 +52,13 @@ const Mercancia = ({ commoditiesList }: Props) => {
   const onSelect = (value: string) => {
     const commodity = commoditiesList.find((item) => item.name === value);
     if (commodity) {
-      setSearchValue(value);
+      setInputValue(value);
       router.push(`/mercancia/${commodity.slug}`);
     }
   };
 
   const onClear = () => {
-    setSearchValue("");
+    setInputValue("");
     router.push("/mercancia");
   };
 
@@ -76,7 +75,7 @@ const Mercancia = ({ commoditiesList }: Props) => {
             options={options}
             onSelect={onSelect}
             value={searchValue}
-            onChange={(value) => setSearchValue(value)}
+            onChange={(value) => setInputValue(value)}
           >
             <Input
               size="large"

@@ -60,6 +60,17 @@ export default function SiteHeader() {
                 },
               ],
             },
+            {
+              key: "3",
+              label: "Herramientas",
+              children: [
+                {
+                  key: "3-1",
+                  label: "Organizador de carga",
+                  onClick: () => router.push("/organizador-de-carga"),
+                },
+              ],
+            },
           ]}
         />
       </div>
