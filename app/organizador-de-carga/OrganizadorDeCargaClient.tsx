@@ -196,7 +196,7 @@ const OrganizadorDeCargaClient: React.FC<OrganizadorDeCargaProps> = ({
                 <Input
                   className="bg-[#071421]! border-[#143A52]! text-white!"
                   size="large"
-                  placeholder="Buscar terminal por nombre..."
+                  placeholder="Buscar locación por nombre..."
                   prefix={<SearchOutlined className="text-[#9ED0FA]" />}
                   suffix={
                     <CloseCircleFilled
@@ -286,7 +286,7 @@ const OrganizadorDeCargaClient: React.FC<OrganizadorDeCargaProps> = ({
               ),
             },
             {
-              title: "Terminal",
+              title: "Locación",
               dataIndex: "terminal",
               key: "terminal",
               filters: terminalFilters,
