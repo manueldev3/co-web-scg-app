@@ -47,6 +47,8 @@ export interface ApiPriceRecord {
   terminal_code: string;
   game_version: string;
   date_modified: number;
+  /** Tamaños de caja soportados, p.ej. "1,2,4,8,16,24,32" (presente en /commodities_prices_all). */
+  container_sizes?: string;
 }
 
 /** Opción para el autocompletado del buscador */
