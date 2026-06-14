@@ -41,7 +41,9 @@ export default function SiteHeader() {
               ? ["1"]
               : activePath("mercancia")
                 ? ["2", "2-1"]
-                : ["1"]
+                : activePath("mejor-ruta")
+                  ? ["2", "2-2"]
+                  : ["1"]
           }
           items={[
             {
@@ -57,6 +59,11 @@ export default function SiteHeader() {
                   key: "2-1",
                   label: "Mercancía",
                   onClick: () => router.push("/mercancia"),
+                },
+                {
+                  key: "2-2",
+                  label: "Mejor Ruta",
+                  onClick: () => router.push("/mejor-ruta"),
                 },
               ],
             },

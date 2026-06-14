@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import "./globals.css";
 import SiteHeader from "./components/SiteHeader";
+import SiteFooter from "./components/SiteFooter";
 import SCGLayout from "./components/SCGLayout";
 import Script from "next/script";
 
@@ -22,8 +23,14 @@ export const metadata: Metadata = {
     "Calcula rutas de comercio lucrativo en Star Citizen con nuestra guía y calculadora de rutas. Maximiza tus ganancias en el universo de Star Citizen con nuestras herramientas de comercio.",
   keywords:
     "Star Citizen, comercio lucrativo, calculadora de rutas, guía de comercio, ganancias en Star Citizen, rutas de comercio, materiales en Star Citizen",
+};
+
+// Next.js 16: themeColor and viewport must live in the `viewport` export,
+// not in `metadata`.
+export const viewport: Viewport = {
   themeColor: "#0F2C3E",
-  viewport: "width=device-width, initial-scale=1",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -54,6 +61,7 @@ export default function RootLayout({
             <hr className="border-gray-700" />
             <SiteHeader />
             {children}
+            <SiteFooter />
           </SCGLayout>
         </AntdRegistry>
       </body>
