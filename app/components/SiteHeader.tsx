@@ -29,7 +29,7 @@ export default function SiteHeader() {
   };
 
   return (
-    <Header className="justify-between flex items-center p-4">
+    <Header className="sticky top-0 z-50 justify-between flex items-center p-4">
       <div className="flex items-center space-x-8">
         <span className="text-5xl font-bold text-[#BCBEC0]">SCG</span>
         <Menu
@@ -43,7 +43,9 @@ export default function SiteHeader() {
                 ? ["2", "2-1"]
                 : activePath("mejor-ruta")
                   ? ["2", "2-2"]
-                  : ["1"]
+                  : activePath("organizador-de-carga")
+                    ? ["2", "2-3"]
+                    : ["1"]
           }
           items={[
             {
@@ -53,7 +55,7 @@ export default function SiteHeader() {
             },
             {
               key: "2",
-              label: "Data",
+              label: "Herramientas para cargadores",
               children: [
                 {
                   key: "2-1",
@@ -65,14 +67,8 @@ export default function SiteHeader() {
                   label: "Mejor Ruta",
                   onClick: () => router.push("/mejor-ruta"),
                 },
-              ],
-            },
-            {
-              key: "3",
-              label: "Herramientas",
-              children: [
                 {
-                  key: "3-1",
+                  key: "2-3",
                   label: "Organizador de carga",
                   onClick: () => router.push("/organizador-de-carga"),
                 },

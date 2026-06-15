@@ -105,10 +105,8 @@ vi.mock("antd", () => {
 
 import SiteHeader from "../SiteHeader";
 
-const dataMenu = (container: HTMLElement): HTMLElement =>
+const toolsMenu = (container: HTMLElement): HTMLElement =>
   container.querySelector('li[data-menu-key="2"]') as HTMLElement;
-const herramientasMenu = (container: HTMLElement): HTMLElement =>
-  container.querySelector('li[data-menu-key="3"]') as HTMLElement;
 
 beforeEach(() => {
   push.mockClear();
@@ -119,47 +117,60 @@ beforeEach(() => {
 afterEach(cleanup);
 
 /**
- * Component tests for Site_Navigation (SiteHeader) — the Data menu entry.
- * Validates: Requirements 1.1, 1.2, 1.3, 1.4
+ * Component tests for Site_Navigation (SiteHeader).
+ *
+ * The former "Data" and "Herramientas" menus are merged into a single
+ * "Herramientas para cargadores" menu (key "2") holding Mercancía, Mejor Ruta,
+ * and Organizador de carga.
  */
-describe("SiteHeader — Mejor Ruta in the Data menu", () => {
-  it("shows 'Mejor Ruta' alongside 'Mercancía' under the Data menu (Req 1.1)", () => {
+describe("SiteHeader — Herramientas para cargadores menu", () => {
+  it("shows the single 'Herramientas para cargadores' menu with all three tools", () => {
     const { container } = render(<SiteHeader />);
-    const data = dataMenu(container);
-    expect(data).not.toBeNull();
-    expect(within(data).getByText("Mejor Ruta")).toBeTruthy();
-    // Mercancía remains present in the same Data submenu.
-    expect(within(data).getByText("Mercancía")).toBeTruthy();
+    const tools = toolsMenu(container);
+    expect(tools).not.toBeNull();
+    expect(within(tools).getByText("Mercancía")).toBeTruthy();
+    expect(within(tools).getByText("Mejor Ruta")).toBeTruthy();
+    expect(within(tools).getByText("Organizador de carga")).toBeTruthy();
+    // The old separate "Data" / "Herramientas" labels no longer exist.
+    expect(screen.queryByText("Data")).toBeNull();
+    expect(screen.getByText("Herramientas para cargadores")).toBeTruthy();
   });
 
-  it("navigates to /mejor-ruta when the item is selected (Req 1.2)", () => {
+  it("navigates to /mejor-ruta when the item is selected", () => {
     render(<SiteHeader />);
     fireEvent.click(screen.getByText("Mejor Ruta"));
     expect(push).toHaveBeenCalledWith("/mejor-ruta");
     expect(push).toHaveBeenCalledTimes(1);
   });
 
-  it("renders the Data menu and the Mejor Ruta item selected on /mejor-ruta (Req 1.3)", () => {
+  it("navigates to /organizador-de-carga from the merged menu", () => {
+    render(<SiteHeader />);
+    fireEvent.click(screen.getByText("Organizador de carga"));
+    expect(push).toHaveBeenCalledWith("/organizador-de-carga");
+  });
+
+  it("renders the tools menu and the Mejor Ruta item selected on /mejor-ruta", () => {
     mockPathname = "/mejor-ruta";
     const { container } = render(<SiteHeader />);
-    // The Data submenu is in its selected state.
-    expect(dataMenu(container).getAttribute("data-selected")).toBe("true");
-    // The Mejor Ruta item itself is rendered selected.
-    const mejorRuta = within(dataMenu(container)).getByText("Mejor Ruta");
+    expect(toolsMenu(container).getAttribute("data-selected")).toBe("true");
+    const mejorRuta = within(toolsMenu(container)).getByText("Mejor Ruta");
     expect(mejorRuta.getAttribute("data-selected")).toBe("true");
   });
 
-  it("keeps 'Mejor Ruta' under Data and never under Herramientas (Req 1.4)", () => {
+  it("renders the tools menu selected on /organizador-de-carga", () => {
+    mockPathname = "/organizador-de-carga";
     const { container } = render(<SiteHeader />);
-    // Present under Data...
-    expect(
-      within(dataMenu(container)).queryByText("Mejor Ruta"),
-    ).not.toBeNull();
-    // ...and absent from Herramientas, which only offers the cargo organizer.
-    const herramientas = herramientasMenu(container);
-    expect(within(herramientas).queryByText("Mejor Ruta")).toBeNull();
-    expect(within(herramientas).getByText("Organizador de carga")).toBeTruthy();
-    // Exactly one "Mejor Ruta" entry exists across the whole navigation.
+    expect(toolsMenu(container).getAttribute("data-selected")).toBe("true");
+    const organizer = within(toolsMenu(container)).getByText(
+      "Organizador de carga",
+    );
+    expect(organizer.getAttribute("data-selected")).toBe("true");
+  });
+
+  it("exposes exactly one entry per tool across the whole navigation", () => {
+    render(<SiteHeader />);
     expect(screen.getAllByText("Mejor Ruta")).toHaveLength(1);
+    expect(screen.getAllByText("Mercancía")).toHaveLength(1);
+    expect(screen.getAllByText("Organizador de carga")).toHaveLength(1);
   });
 });
