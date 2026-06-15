@@ -35,8 +35,8 @@ export default function YoutubeBackground({
   return (
     <div className="relative w-full min-h-[80vh] lg:min-h-[88.9vh] overflow-hidden">
       {/* Contenedor del Player que fuerza la proporción 16:9 de fondo tipo 'cover' */}
-      <div className="fixed top-0 left-0 w-full h-screen pointer-events-none z-[-1]">
-        <div className="absolute top-1/2 left-1/2 w-screen h-[56.25vw] min-h-screen min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2">
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute top-1/2 left-1/2 w-screen h-[56.25vw] min-h-full min-w-[177.77vh] -translate-x-1/2 -translate-y-1/2">
           <YouTube
             videoId={videoId}
             opts={opts}

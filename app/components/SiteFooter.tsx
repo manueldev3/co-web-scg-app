@@ -86,7 +86,16 @@ export default function SiteFooter() {
       <div className="border-t border-gray-700">
         <p className="max-w-6xl mx-auto px-4 py-4 text-xs text-center">
           © {new Date().getFullYear()} SCG. Guía de Star Citizen. Herramienta no
-          oficial, sin afiliación con Cloud Imperium Games.
+          oficial, sin afiliación con Cloud Imperium Games. Hecho con ❤️ por{" "}
+          <Link
+            href="https://manueldeveloper.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#9ED0FA] hover:text-[#bde0ff] no-underline"
+          >
+            Manuel Fernández
+          </Link>
+          .
         </p>
       </div>
     </footer>
