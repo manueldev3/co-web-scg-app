@@ -100,6 +100,33 @@ vi.mock("antd", () => {
         { "data-testid": "site-menu" },
         renderItems(items, defaultSelectedKeys),
       ),
+    // Drawer renders its children only when open (matches AntD's default
+    // lazy behaviour), so the mobile menu does not duplicate the desktop one
+    // while the drawer is closed.
+    Drawer: ({
+      open = false,
+      children,
+    }: {
+      open?: boolean;
+      children?: React.ReactNode;
+    }) => (open ? React.createElement("div", null, children) : null),
+    Button: ({
+      icon,
+      children,
+      onClick,
+      ...rest
+    }: {
+      icon?: React.ReactNode;
+      children?: React.ReactNode;
+      onClick?: () => void;
+      [key: string]: unknown;
+    }) =>
+      React.createElement(
+        "button",
+        { type: "button", onClick, ...rest },
+        icon,
+        children,
+      ),
   };
 });
 
