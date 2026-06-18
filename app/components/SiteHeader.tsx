@@ -26,15 +26,17 @@ export default function SiteHeader() {
     setOpen(false);
   };
 
-  const selectedKeys = activePath("")
-    ? ["1"]
-    : activePath("mercancia")
-      ? ["2", "2-1"]
-      : activePath("mejor-ruta")
-        ? ["2", "2-2"]
-        : activePath("organizador-de-carga")
-          ? ["2", "2-3"]
-          : ["1"];
+  const selectedKeys = pathname.startsWith("/wiki")
+    ? ["3"]
+    : activePath("")
+      ? ["1"]
+      : activePath("mercancia")
+        ? ["2", "2-1"]
+        : activePath("mejor-ruta")
+          ? ["2", "2-2"]
+          : activePath("organizador-de-carga")
+            ? ["2", "2-3"]
+            : ["1"];
 
   const items: MenuProps["items"] = [
     {
@@ -62,6 +64,11 @@ export default function SiteHeader() {
           onClick: () => go("/organizador-de-carga"),
         },
       ],
+    },
+    {
+      key: "3",
+      label: "Wiki",
+      onClick: () => go("/wiki"),
     },
   ];
 
