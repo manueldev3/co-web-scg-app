@@ -42,6 +42,7 @@ export default function RootLayout({
     <html
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <head>
         {/* 2. Colocas el script de Google dentro de <head> o directamente en el body */}

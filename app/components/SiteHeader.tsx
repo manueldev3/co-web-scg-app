@@ -26,15 +26,17 @@ export default function SiteHeader() {
     setOpen(false);
   };
 
-  const selectedKeys = activePath("")
-    ? ["1"]
-    : activePath("mercancia")
-      ? ["2", "2-1"]
-      : activePath("mejor-ruta")
-        ? ["2", "2-2"]
-        : activePath("organizador-de-carga")
-          ? ["2", "2-3"]
-          : ["1"];
+  const selectedKeys = pathname.startsWith("/wiki")
+    ? ["3"]
+    : activePath("")
+      ? ["1"]
+      : activePath("mercancia")
+        ? ["2", "2-1"]
+        : activePath("mejor-ruta")
+          ? ["2", "2-2"]
+          : activePath("organizador-de-carga")
+            ? ["2", "2-3"]
+            : ["1"];
 
   const items: MenuProps["items"] = [
     {
@@ -63,12 +65,17 @@ export default function SiteHeader() {
         },
       ],
     },
+    {
+      key: "3",
+      label: "Wiki",
+      onClick: () => go("/wiki"),
+    },
   ];
 
   return (
     <Header className="sticky top-0 z-50 justify-between flex items-center p-4">
       <div className="flex items-center space-x-8">
-        <span className="text-5xl font-bold text-[#BCBEC0]">SCG</span>
+        <span className="font-sans text-5xl font-bold text-[#BCBEC0]">SCG</span>
 
         {/*
           Breakpoint switch — only ONE navigation shows at a time:

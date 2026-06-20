@@ -11,6 +11,7 @@ import {
 } from "@ant-design/icons";
 import Link from "next/link";
 import YoutubeBackground from "./components/YoutubeVideoBackground";
+import HomeWikiSection from "./components/HomeWikiSection";
 
 type Tool = {
   icon: React.ReactNode;
@@ -38,7 +39,7 @@ const TOOLS: Tool[] = [
     cta: "Ver precios",
   },
   {
-    icon: <NodeIndexOutlined className="text-8xl"/>,
+    icon: <NodeIndexOutlined className="text-8xl" />,
     name: "Mejor Ruta",
     tagline: "Rutas comerciales más rentables para tu nave",
     description:
@@ -113,110 +114,115 @@ const Home = () => {
         <div className="relative bg-[#040d16]">
           {/* Intro */}
           <section className="px-6 lg:px-8 py-16 max-w-6xl mx-auto text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-white">
-            Herramientas para cargadores
-          </h2>
-          <p className="mt-4 text-gray-300 max-w-3xl mx-auto lg:text-lg">
-            Todo lo que necesitas para comerciar de forma inteligente en Star
-            Citizen: consulta precios, encuentra las rutas más rentables y
-            organiza tu bodega. Estas son las herramientas disponibles y cómo te
-            ayudan.
-          </p>
-        </section>
+            <h2 className="text-3xl lg:text-4xl font-bold text-white">
+              Herramientas para cargadores
+            </h2>
+            <p className="mt-4 text-gray-300 max-w-3xl mx-auto lg:text-lg">
+              Todo lo que necesitas para comerciar de forma inteligente en Star
+              Citizen: consulta precios, encuentra las rutas más rentables y
+              organiza tu bodega. Estas son las herramientas disponibles y cómo
+              te ayudan.
+            </p>
+          </section>
 
-        {/* Tool sections */}
-        <section className="px-6 lg:px-8 pb-8 max-w-6xl mx-auto space-y-6">
-          {TOOLS.map((tool, i) => (
-            <div
-              key={tool.href}
-              className={`flex flex-col gap-6 rounded-2xl border border-[#143A52] bg-[#071421] p-6 lg:p-10 lg:flex-row lg:items-center ${
-                i % 2 === 1 ? "lg:flex-row-reverse" : ""
-              }`}
-            >
-              {/* Icon panel */}
-              <div className="flex shrink-0 items-center justify-center">
-                <div className="flex h-64 w-64 items-center justify-center rounded-2xl bg-[#0F2C3E] text-5xl text-[#9ED0FA]">
-                  {tool.icon}
-                </div>
-              </div>
-
-              {/* Text */}
-              <div className="flex-1">
-                <span className="text-sm font-semibold uppercase tracking-wide text-[#4a9eda]">
-                  {tool.tagline}
-                </span>
-                <h3 className="mt-1 text-2xl lg:text-3xl font-bold text-white">
-                  {tool.name}
-                </h3>
-                <p className="mt-3 text-gray-300 lg:text-lg">
-                  {tool.description}
-                </p>
-                <ul className="mt-4 space-y-2">
-                  {tool.bullets.map((b) => (
-                    <li
-                      key={b}
-                      className="flex items-start gap-2 text-gray-200"
-                    >
-                      <span className="mt-1 text-[#9ED0FA]">▸</span>
-                      <span>{b}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-6">
-                  <Button type="primary" size="large" href={tool.href}>
-                    <span className="font-bold uppercase text-[#0A1D29]">
-                      {tool.cta}
-                    </span>
-                  </Button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </section>
-
-        {/* Feature highlights */}
-        <section className="px-6 lg:px-8 py-16 max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {FEATURES.map((f) => (
+          {/* Tool sections */}
+          <section className="px-6 lg:px-8 pb-8 max-w-6xl mx-auto space-y-6">
+            {TOOLS.map((tool, i) => (
               <div
-                key={f.title}
-                className="rounded-xl border border-[#143A52] bg-[#071421] p-6 text-center"
+                key={tool.href}
+                className={`flex flex-col gap-6 rounded-2xl border border-[#143A52] bg-[#071421] p-6 lg:p-10 lg:flex-row lg:items-center ${
+                  i % 2 === 1 ? "lg:flex-row-reverse" : ""
+                }`}
               >
-                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#0F2C3E] text-2xl text-[#9ED0FA]">
-                  {f.icon}
+                {/* Icon panel */}
+                <div className="flex shrink-0 items-center justify-center">
+                  <div className="flex h-64 w-64 items-center justify-center rounded-2xl bg-[#0F2C3E] text-5xl text-[#9ED0FA]">
+                    {tool.icon}
+                  </div>
                 </div>
-                <h4 className="text-lg font-semibold text-white">{f.title}</h4>
-                <p className="mt-2 text-sm text-gray-300">{f.text}</p>
+
+                {/* Text */}
+                <div className="flex-1">
+                  <span className="text-sm font-semibold uppercase tracking-wide text-[#4a9eda]">
+                    {tool.tagline}
+                  </span>
+                  <h3 className="mt-1 text-2xl lg:text-3xl font-bold text-white">
+                    {tool.name}
+                  </h3>
+                  <p className="mt-3 text-gray-300 lg:text-lg">
+                    {tool.description}
+                  </p>
+                  <ul className="mt-4 space-y-2">
+                    {tool.bullets.map((b) => (
+                      <li
+                        key={b}
+                        className="flex items-start gap-2 text-gray-200"
+                      >
+                        <span className="mt-1 text-[#9ED0FA]">▸</span>
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-6">
+                    <Button type="primary" size="large" href={tool.href}>
+                      <span className="font-bold uppercase text-[#0A1D29]">
+                        {tool.cta}
+                      </span>
+                    </Button>
+                  </div>
+                </div>
               </div>
             ))}
-          </div>
-        </section>
+          </section>
 
-        {/* Closing CTA */}
-        <section className="px-6 lg:px-8 pb-20">
-          <div className="mx-auto max-w-4xl rounded-2xl border border-[#1e4a6e] bg-gradient-to-r from-[#0a1929] to-[#0F2C3E] p-8 lg:p-12 text-center">
-            <h2 className="text-2xl lg:text-3xl font-bold text-white">
-              ¿Listo para hacer tu primer millón?
-            </h2>
-            <p className="mt-3 text-gray-300 lg:text-lg">
-              Empieza por calcular tu mejor ruta de comercio según tu nave y tu
-              capital.
-            </p>
-            <div className="mt-6 flex flex-wrap justify-center gap-3">
-              <Button type="primary" size="large" href="/mejor-ruta">
-                <span className="font-bold uppercase text-[#0A1D29]">
-                  Calcular mi mejor ruta
-                </span>
-              </Button>
-              <Link
-                href="/mercancia"
-                className="inline-flex items-center rounded-md border border-[#1e4a6e] px-5 py-2 font-semibold text-[#9ED0FA] no-underline transition-colors hover:bg-[#0F2C3E]"
-              >
-                Explorar precios
-              </Link>
+          {/* Feature highlights */}
+          <section className="px-6 lg:px-8 py-16 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              {FEATURES.map((f) => (
+                <div
+                  key={f.title}
+                  className="rounded-xl border border-[#143A52] bg-[#071421] p-6 text-center"
+                >
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#0F2C3E] text-2xl text-[#9ED0FA]">
+                    {f.icon}
+                  </div>
+                  <h4 className="text-lg font-semibold text-white">
+                    {f.title}
+                  </h4>
+                  <p className="mt-2 text-sm text-gray-300">{f.text}</p>
+                </div>
+              ))}
             </div>
-          </div>
-        </section>
+          </section>
+
+          {/* Wiki destacada (Req 7.1) */}
+          <HomeWikiSection />
+
+          {/* Closing CTA */}
+          <section className="px-6 lg:px-8 pb-20">
+            <div className="mx-auto max-w-4xl rounded-2xl border border-[#1e4a6e] bg-gradient-to-r from-[#0a1929] to-[#0F2C3E] p-8 lg:p-12 text-center">
+              <h2 className="text-2xl lg:text-3xl font-bold text-white">
+                ¿Listo para hacer tu primer millón?
+              </h2>
+              <p className="mt-3 text-gray-300 lg:text-lg">
+                Empieza por calcular tu mejor ruta de comercio según tu nave y
+                tu capital.
+              </p>
+              <div className="mt-6 flex flex-wrap justify-center gap-3">
+                <Button type="primary" size="large" href="/mejor-ruta">
+                  <span className="font-bold uppercase text-[#0A1D29]">
+                    Calcular mi mejor ruta
+                  </span>
+                </Button>
+                <Link
+                  href="/mercancia"
+                  className="inline-flex items-center rounded-md border border-[#1e4a6e] px-5 py-2 font-semibold text-[#9ED0FA] no-underline transition-colors hover:bg-[#0F2C3E]"
+                >
+                  Explorar precios
+                </Link>
+              </div>
+            </div>
+          </section>
         </div>
       </main>
     </div>

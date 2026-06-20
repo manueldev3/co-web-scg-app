@@ -135,6 +135,23 @@ import SiteHeader from "../SiteHeader";
 const toolsMenu = (container: HTMLElement): HTMLElement =>
   container.querySelector('li[data-menu-key="2"]') as HTMLElement;
 
+const wikiMenu = (container: HTMLElement): HTMLElement =>
+  container.querySelector('li[data-menu-key="3"]') as HTMLElement;
+
+const inicioMenu = (container: HTMLElement): HTMLElement =>
+  container.querySelector('li[data-menu-key="1"]') as HTMLElement;
+
+// Top-level menu keys, in DOM order, of the (single) desktop navigation.
+const topLevelKeys = (container: HTMLElement): string[] => {
+  const nav = container.querySelector(
+    '[data-testid="site-menu"]',
+  ) as HTMLElement;
+  const list = nav.querySelector(":scope > ul") as HTMLElement;
+  return Array.from(list.querySelectorAll(":scope > li")).map(
+    (li) => (li as HTMLElement).getAttribute("data-menu-key") ?? "",
+  );
+};
+
 beforeEach(() => {
   push.mockClear();
   replace.mockClear();
@@ -199,5 +216,86 @@ describe("SiteHeader — Herramientas para cargadores menu", () => {
     expect(screen.getAllByText("Mejor Ruta")).toHaveLength(1);
     expect(screen.getAllByText("Mercancía")).toHaveLength(1);
     expect(screen.getAllByText("Organizador de carga")).toHaveLength(1);
+  });
+});
+
+/**
+ * Component tests for the Wiki navigation entry (Requirements 1.1–1.6).
+ *
+ * The Wiki entry is a top-level menu item (key "3", label "Wiki") that
+ * navigates to /wiki and is selected whenever the active path lives under
+ * /wiki. It coexists with the existing "Inicio" and "Herramientas para
+ * cargadores" entries without reordering them.
+ */
+describe("SiteHeader — Wiki navigation entry", () => {
+  it("shows a 'Wiki' entry in the main navigation (Req 1.1, 1.5)", () => {
+    const { container } = render(<SiteHeader />);
+    const wiki = wikiMenu(container);
+    expect(wiki).not.toBeNull();
+    expect(within(wiki).getByText("Wiki")).toBeTruthy();
+  });
+
+  it("navigates to /wiki when the 'Wiki' entry is selected (Req 1.2)", () => {
+    render(<SiteHeader />);
+    fireEvent.click(screen.getByText("Wiki"));
+    expect(push).toHaveBeenCalledWith("/wiki");
+    expect(push).toHaveBeenCalledTimes(1);
+  });
+
+  it("keeps the existing entries 'Inicio' and 'Herramientas para cargadores' in order (Req 1.4)", () => {
+    const { container } = render(<SiteHeader />);
+    // Existing entries are still present.
+    expect(within(inicioMenu(container)).getByText("Inicio")).toBeTruthy();
+    expect(
+      within(toolsMenu(container)).getByText("Herramientas para cargadores"),
+    ).toBeTruthy();
+    // Order is preserved: Inicio (1), Herramientas (2), Wiki (3) appended last.
+    expect(topLevelKeys(container)).toEqual(["1", "2", "3"]);
+  });
+
+  it("marks the Wiki entry as selected on /wiki (Req 1.3)", () => {
+    mockPathname = "/wiki";
+    const { container } = render(<SiteHeader />);
+    expect(wikiMenu(container).getAttribute("data-selected")).toBe("true");
+    const wikiLabel = within(wikiMenu(container)).getByText("Wiki");
+    expect(wikiLabel.getAttribute("data-selected")).toBe("true");
+  });
+
+  it("marks the Wiki entry as selected on a nested wiki path like /wiki/naves (Req 1.3)", () => {
+    mockPathname = "/wiki/naves";
+    const { container } = render(<SiteHeader />);
+    expect(wikiMenu(container).getAttribute("data-selected")).toBe("true");
+  });
+
+  it("does not mark the Wiki entry as selected on the home path '/' (Req 1.3)", () => {
+    mockPathname = "/";
+    const { container } = render(<SiteHeader />);
+    expect(wikiMenu(container).getAttribute("data-selected")).toBe("false");
+    // Inicio is the selected entry on '/'.
+    expect(inicioMenu(container).getAttribute("data-selected")).toBe("true");
+  });
+
+  it("exposes exactly one Wiki entry while the drawer is closed (Req 1.5)", () => {
+    render(<SiteHeader />);
+    expect(screen.getAllByText("Wiki")).toHaveLength(1);
+  });
+
+  it("shows the Wiki entry inside the drawer when it is opened (Req 1.6)", () => {
+    render(<SiteHeader />);
+    // Only the desktop menu's Wiki entry is present before opening the drawer.
+    expect(screen.getAllByText("Wiki")).toHaveLength(1);
+    // Open the mobile drawer via the hamburger trigger.
+    fireEvent.click(screen.getByLabelText("Abrir menú"));
+    // Now both the desktop and the drawer navigations expose a Wiki entry.
+    expect(screen.getAllByText("Wiki")).toHaveLength(2);
+  });
+
+  it("navigates to /wiki from the drawer entry too (Req 1.2, 1.6)", () => {
+    render(<SiteHeader />);
+    fireEvent.click(screen.getByLabelText("Abrir menú"));
+    const wikiEntries = screen.getAllByText("Wiki");
+    // Click the drawer entry (the second one mounted).
+    fireEvent.click(wikiEntries[wikiEntries.length - 1]);
+    expect(push).toHaveBeenCalledWith("/wiki");
   });
 });
