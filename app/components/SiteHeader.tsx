@@ -75,7 +75,7 @@ export default function SiteHeader() {
   return (
     <Header className="sticky top-0 z-50 justify-between flex items-center p-4">
       <div className="flex items-center space-x-8">
-        <span className="text-5xl font-bold text-[#BCBEC0]">SCG</span>
+        <span className="font-sans text-5xl font-bold text-[#BCBEC0]">SCG</span>
 
         {/*
           Breakpoint switch — only ONE navigation shows at a time:
