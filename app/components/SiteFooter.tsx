@@ -71,19 +71,29 @@ export default function SiteFooter() {
                 manueldev3@gmail.com
               </Link>
             </li>
-            <li>
-              <Link
-                href="https://scg.manueldeveloper.com/app"
-                className="hover:text-[#9ED0FA] no-underline"
-              >
-                SCG App
-              </Link>
-            </li>
           </ul>
         </section>
       </div>
 
       <div className="border-t border-gray-700">
+        <nav
+          aria-label="Enlaces legales"
+          className="max-w-6xl mx-auto px-4 pt-4 flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs"
+        >
+          <Link
+            href="/politica-de-privacidad"
+            className="hover:text-[#9ED0FA] no-underline"
+          >
+            Política de Privacidad
+          </Link>
+          <span aria-hidden="true">·</span>
+          <Link
+            href="/terminos-y-condiciones"
+            className="hover:text-[#9ED0FA] no-underline"
+          >
+            Términos y Condiciones
+          </Link>
+        </nav>
         <p className="max-w-6xl mx-auto px-4 py-4 text-xs text-center">
           © {new Date().getFullYear()} SCG. Guía de Star Citizen. Herramienta no
           oficial, sin afiliación con Cloud Imperium Games. Hecho con ❤️ por{" "}

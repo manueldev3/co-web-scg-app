@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+/* Mapea las fuentes Geist (cargadas en layout.tsx con next/font) al sistema de
+   temas de Tailwind v4, de modo que las utilidades `font-sans` / `font-mono`
+   apliquen realmente Geist como font-family. */
+@theme {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
 :root {
   --color-background: #061220;
 }
