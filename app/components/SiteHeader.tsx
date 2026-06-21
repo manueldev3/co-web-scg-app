@@ -6,6 +6,7 @@ import { MenuOutlined } from "@ant-design/icons";
 import { Button, Drawer, Menu } from "antd";
 import type { MenuProps } from "antd";
 import { usePathname, useRouter } from "next/navigation";
+import { isBlogLinkActive } from "../blog/blog-engine";
 
 export default function SiteHeader() {
   const router = useRouter();
@@ -26,17 +27,19 @@ export default function SiteHeader() {
     setOpen(false);
   };
 
-  const selectedKeys = pathname.startsWith("/wiki")
-    ? ["3"]
-    : activePath("")
-      ? ["1"]
-      : activePath("mercancia")
-        ? ["2", "2-1"]
-        : activePath("mejor-ruta")
-          ? ["2", "2-2"]
-          : activePath("organizador-de-carga")
-            ? ["2", "2-3"]
-            : ["1"];
+  const selectedKeys = isBlogLinkActive(pathname)
+    ? ["4"]
+    : pathname.startsWith("/wiki")
+      ? ["3"]
+      : activePath("")
+        ? ["1"]
+        : activePath("mercancia")
+          ? ["2", "2-1"]
+          : activePath("mejor-ruta")
+            ? ["2", "2-2"]
+            : activePath("organizador-de-carga")
+              ? ["2", "2-3"]
+              : ["1"];
 
   const items: MenuProps["items"] = [
     {
@@ -69,6 +72,11 @@ export default function SiteHeader() {
       key: "3",
       label: "Wiki",
       onClick: () => go("/wiki"),
+    },
+    {
+      key: "4",
+      label: "Blog",
+      onClick: () => go("/blog"),
     },
   ];
 

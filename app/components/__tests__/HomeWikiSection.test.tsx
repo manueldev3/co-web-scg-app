@@ -201,6 +201,15 @@ vi.mock("../YoutubeVideoBackground", () => ({
     React.createElement("div", { "data-testid": "hero-video" }, children),
 }));
 
+// HomeFeaturedBlog (added as the first home section) pulls in extra Ant Design
+// icons/components and a server action that reaches the Firebase Admin SDK,
+// none of which belong to this coexistence test. It has its own dedicated unit
+// tests, so we stub it with a lightweight placeholder here.
+vi.mock("../HomeFeaturedBlog", () => ({
+  default: () =>
+    React.createElement("div", { "data-testid": "home-featured-blog" }),
+}));
+
 import Home from "../../page";
 
 describe("Home page — wiki section coexists with existing content (Req 7.1)", () => {

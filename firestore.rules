@@ -1,0 +1,151 @@
+rules_version = '2';
+
+// Reglas de seguridad de Cloud Firestore para el Blog.
+// Implementan la línea de defensa autoritativa para las escrituras de tiempo
+// real desde el cliente (comentarios, «me gusta», presencia) y revalidan las
+// mismas condiciones que comprueban las Server Actions (doble línea de defensa).
+//
+// Modelo de colecciones (ver design.md «Colecciones de Firestore»):
+//   posts/{postId}                       -> Post { status, categoryIds, commentCount, likeCount, ... }
+//   posts/{postId}/comments/{commentId}  -> Comment { postId, authorId, content, createdAt }
+//   posts/{postId}/likes/{userId}        -> Like { postId, userId, createdAt }  (id del doc = userId)
+//   categories/{categoryId}              -> Category { name, nameLower, ... }
+//   users/{uid}                          -> BlogUser { uid, email, role, createdAt }
+//   presence/{connectionId}              -> PresenceConnection { lastSeen, location?, ... }
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------------------------------------------------------------------
+    // Funciones auxiliares
+    // ---------------------------------------------------------------------
+
+    // ¿La petición proviene de un usuario autenticado?
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // ¿El usuario autenticado tiene privilegios de Administrador?
+    // Se identifica mediante el custom claim `admin == true` del ID token.
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.admin == true;
+    }
+
+    // ¿El identificador dado coincide con el del usuario autenticado?
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    // ¿La Entrada padre está publicada? Se usa para autorizar la lectura
+    // pública de comentarios y «me gusta» asociados a Entradas publicadas.
+    function postIsPublished(postId) {
+      return exists(/databases/$(database)/documents/posts/$(postId)) &&
+        get(/databases/$(database)/documents/posts/$(postId)).data.status == 'publicada';
+    }
+
+    // ---------------------------------------------------------------------
+    // posts/{postId}  -> Entradas
+    // ---------------------------------------------------------------------
+    match /posts/{postId} {
+
+      // Req 15.1: cualquier usuario (autenticado o no) puede leer Entradas publicadas.
+      // Req 15.8 / 10.10: un usuario sin privilegios de Administrador NO puede leer
+      // Entradas en estado `borrador`; solo el Administrador puede leerlas.
+      allow read: if resource.data.status == 'publicada' || isAdmin();
+
+      // Req 15.6 / 10.10: solo el Administrador puede crear, editar y eliminar Entradas.
+      // Req 15.7: cualquier intento de escritura sin privilegios se rechaza
+      // conservando el dato existente sin cambios.
+      allow create, update, delete: if isAdmin();
+
+      // -------------------------------------------------------------------
+      // posts/{postId}/comments/{commentId}  -> Comentarios
+      // -------------------------------------------------------------------
+      match /comments/{commentId} {
+
+        // Req 15.1: lectura pública de los Comentarios de Entradas publicadas.
+        // Req 15.8: los Comentarios de Entradas en `borrador` solo los lee el Administrador.
+        allow read: if isAdmin() || postIsPublished(postId);
+
+        // Req 15.2: se rechazan las escrituras de usuarios no autenticados.
+        // Req 15.3: un Usuario_Registrado solo puede crear un Comentario cuyo
+        // `authorId` coincide exactamente con su propio identificador, y únicamente
+        // sobre una Entrada publicada.
+        // Req 15.4: si el `authorId` no coincide, se rechaza sin persistir nada.
+        allow create: if isSignedIn()
+          && request.resource.data.authorId == request.auth.uid
+          && postIsPublished(postId);
+
+        // Req 15.5: un Usuario_Registrado solo puede modificar o eliminar sus
+        // propios Comentarios; el Administrador puede moderar cualquiera. Cualquier
+        // otro caso se rechaza conservando el dato existente sin cambios.
+        allow update, delete: if isAdmin()
+          || (isSignedIn() && resource.data.authorId == request.auth.uid);
+      }
+
+      // -------------------------------------------------------------------
+      // posts/{postId}/likes/{userId}  -> «Me gusta» (id del doc = userId)
+      // -------------------------------------------------------------------
+      match /likes/{userId} {
+
+        // Req 15.1: lectura pública de los MeGusta de Entradas publicadas.
+        // Req 15.8: los MeGusta de Entradas en `borrador` solo los lee el Administrador.
+        allow read: if isAdmin() || postIsPublished(postId);
+
+        // Req 15.2: se rechazan las escrituras de usuarios no autenticados.
+        // Req 15.3 / 5.6: un Usuario_Registrado solo puede registrar un MeGusta
+        // cuyo identificador (id del documento = `userId`) y campo `userId` coinciden
+        // con el suyo, garantizando como máximo un MeGusta por usuario y Entrada,
+        // y únicamente sobre una Entrada publicada.
+        // Req 15.4: si el identificador no coincide, se rechaza sin persistir nada.
+        allow create: if isOwner(userId)
+          && request.resource.data.userId == request.auth.uid
+          && postIsPublished(postId);
+
+        // Req 15.5: un Usuario_Registrado solo puede eliminar su propio MeGusta
+        // (conmutación del «me gusta»); el Administrador puede moderar cualquiera.
+        allow delete: if isAdmin() || isOwner(userId);
+      }
+    }
+
+    // ---------------------------------------------------------------------
+    // categories/{categoryId}  -> Categorías
+    // ---------------------------------------------------------------------
+    match /categories/{categoryId} {
+
+      // Las Categorías son públicas: se usan en el listado y el filtrado del Blog.
+      allow read: if true;
+
+      // Req 15.6 / 10.10: solo el Administrador puede crear, editar y eliminar Categorías.
+      // Req 15.7: cualquier intento de escritura sin privilegios se rechaza
+      // conservando la Categoría existente sin cambios.
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ---------------------------------------------------------------------
+    // users/{uid}  -> Registros de usuario (suscriptores)
+    // ---------------------------------------------------------------------
+    match /users/{uid} {
+
+      // Req 9.6 / 15.7: solo el Administrador puede leer o escribir registros de
+      // Usuarios mediante operaciones directas sobre Firestore. Las cuentas se crean
+      // desde el servidor con el Admin SDK (que omite estas reglas), por lo que el
+      // acceso directo del cliente queda restringido al Administrador.
+      allow read, write: if isAdmin();
+    }
+
+    // ---------------------------------------------------------------------
+    // presence/{connectionId}  -> Conexiones de presencia en tiempo real (Req 8)
+    // ---------------------------------------------------------------------
+    match /presence/{connectionId} {
+
+      // Solo el Administrador (Dashboard) consulta el conjunto de conexiones activas.
+      allow read: if isAdmin();
+
+      // El conteo de usuarios conectados incluye a Visitantes no autenticados, por lo
+      // que cualquier cliente puede registrar y refrescar (heartbeat) su propia conexión
+      // de presencia. Estos documentos no contienen datos personales sensibles.
+      allow create, update, delete: if true;
+    }
+  }
+}

@@ -12,6 +12,7 @@ import {
 import Link from "next/link";
 import YoutubeBackground from "./components/YoutubeVideoBackground";
 import HomeWikiSection from "./components/HomeWikiSection";
+import HomeFeaturedBlog from "./components/HomeFeaturedBlog";
 
 type Tool = {
   icon: React.ReactNode;
@@ -109,6 +110,13 @@ const Home = () => {
             </Button>
           </div>
         </YoutubeBackground>
+
+        {/* Seccion_Destacados del Blog: primera sección de CONTENIDO tras el
+            hero. Va envuelta en un contenedor opaco y `relative` para cubrir el
+            video fijo del hero que se renderiza justo encima. */}
+        <div className="relative bg-[#040d16]">
+          <HomeFeaturedBlog />
+        </div>
 
         {/* Secciones (fondo opaco para cubrir el video fijo de fondo) */}
         <div className="relative bg-[#040d16]">
