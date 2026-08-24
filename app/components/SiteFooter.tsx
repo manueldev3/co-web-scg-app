@@ -22,7 +22,7 @@ export default function SiteFooter() {
         {/* Links section (Requirement 9.3) */}
         <nav aria-label="Enlaces" className="space-y-2">
           <h2 className="text-[#BCBEC0] text-sm font-semibold uppercase tracking-wide">
-            Enlaces
+            Herramientas
           </h2>
           <ul className="space-y-1 text-sm">
             <li>
@@ -54,15 +54,47 @@ export default function SiteFooter() {
                 Organizador de carga
               </Link>
             </li>
+            <li>
+              <Link
+                href="/wiki"
+                className="hover:text-[#9ED0FA] no-underline"
+              >
+                Wiki
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/guias"
+                className="hover:text-[#9ED0FA] no-underline"
+              >
+                Guías
+              </Link>
+            </li>
           </ul>
         </nav>
 
         {/* Contact section (Requirement 9.3) */}
         <section aria-label="Contacto" className="space-y-2">
           <h2 className="text-[#BCBEC0] text-sm font-semibold uppercase tracking-wide">
-            Contacto
+            Información
           </h2>
           <ul className="space-y-1 text-sm">
+            <li>
+              <Link
+                href="/sobre-nosotros"
+                className="hover:text-[#9ED0FA] no-underline"
+              >
+                Sobre nosotros
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/contacto"
+                className="hover:text-[#9ED0FA] no-underline"
+              >
+                Contacto
+              </Link>
+            </li>
             <li>
               <Link
                 href="mailto:manueldev3@gmail.com"
