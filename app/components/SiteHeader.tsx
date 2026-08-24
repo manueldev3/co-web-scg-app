@@ -28,15 +28,21 @@ export default function SiteHeader() {
 
   const selectedKeys = pathname.startsWith("/wiki")
     ? ["3"]
-    : activePath("")
-      ? ["1"]
-      : activePath("mercancia")
-        ? ["2", "2-1"]
-        : activePath("mejor-ruta")
-          ? ["2", "2-2"]
-          : activePath("organizador-de-carga")
-            ? ["2", "2-3"]
-            : ["1"];
+    : pathname.startsWith("/guias")
+      ? ["4"]
+      : pathname.startsWith("/sobre-nosotros")
+        ? ["5"]
+        : pathname.startsWith("/contacto")
+          ? ["6"]
+          : activePath("")
+            ? ["1"]
+            : activePath("mercancia")
+              ? ["2", "2-1"]
+              : activePath("mejor-ruta")
+                ? ["2", "2-2"]
+                : activePath("organizador-de-carga")
+                  ? ["2", "2-3"]
+                  : ["1"];
 
   const items: MenuProps["items"] = [
     {
@@ -69,6 +75,21 @@ export default function SiteHeader() {
       key: "3",
       label: "Wiki",
       onClick: () => go("/wiki"),
+    },
+    {
+      key: "4",
+      label: "Guías",
+      onClick: () => go("/guias"),
+    },
+    {
+      key: "5",
+      label: "Sobre nosotros",
+      onClick: () => go("/sobre-nosotros"),
+    },
+    {
+      key: "6",
+      label: "Contacto",
+      onClick: () => go("/contacto"),
     },
   ];
 
