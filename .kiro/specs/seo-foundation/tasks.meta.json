@@ -1,0 +1,470 @@
+{
+  "pbtResults": {
+    "1.5 Escribir property tests para schemas.ts": {
+      "status": "passed",
+      "lastRunTimestamp": 1787607595817
+    },
+    "1.3 Escribir property tests para buildCanonicalUrl y buildMetadata": {
+      "status": "passed",
+      "lastRunTimestamp": 1787608618172
+    },
+    "2.2 Escribir property tests para JsonLd": {
+      "status": "passed",
+      "lastRunTimestamp": 1787608856557
+    },
+    "2.4 Escribir property tests para Breadcrumbs": {
+      "status": "passed",
+      "lastRunTimestamp": 1787609190401
+    },
+    "5.5 Escribir property tests para metadata de wiki": {
+      "status": "passed",
+      "lastRunTimestamp": 1787610884388
+    },
+    "5.3 Escribir property tests para metadata de commodity": {
+      "status": "passed",
+      "lastRunTimestamp": 1787610921005
+    },
+    "4.3 Escribir property tests para sitemap": {
+      "status": "passed",
+      "lastRunTimestamp": 1787611329105
+    }
+  },
+  "executionHistory": {
+    "1.1 Crear `lib/seo/constants.ts` con CANONICAL_DOMAIN, SITE_NAME, DEFAULT_LOCALE, DEFAULT_DESCRIPTION": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605140952
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605151003
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605197299
+      }
+    ],
+    "1.2 Crear `lib/seo/metadata.ts` con buildMetadata y buildCanonicalUrl": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605140980
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605202514
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787607460754
+      }
+    ],
+    "1.3 Escribir property tests para buildCanonicalUrl y buildMetadata": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605140998
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787607465449
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787608634918
+      }
+    ],
+    "1.4 Crear `lib/seo/schemas.ts` con funciones buildWebSiteSchema, buildBreadcrumbSchema, buildProductSchema, buildArticleSchema": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605141020
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605203322
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787607460765
+      }
+    ],
+    "1.5 Escribir property tests para schemas.ts": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605141044
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787607466285
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787608635833
+      }
+    ],
+    "2.1 Crear `lib/seo/components/JsonLd.tsx` — Server Component que serializa JSON-LD con escape XSS": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605141061
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787607467213
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787608637298
+      }
+    ],
+    "2.2 Escribir property tests para JsonLd": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605141077
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787608642648
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787609065726
+      }
+    ],
+    "2.3 Crear `lib/seo/components/Breadcrumbs.tsx` — Server Component con nav accesible y emisión JSON-LD": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605141093
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787608643721
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787609066936
+      }
+    ],
+    "2.4 Escribir property tests para Breadcrumbs": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605141108
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787609072739
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787609210635
+      }
+    ],
+    "2.5 Crear `lib/seo/index.ts` — barrel export de todos los módulos": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605141126
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787609073616
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787609211606
+      }
+    ],
+    "3. Checkpoint - Verificar módulos lib/seo": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605141139
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787611358488
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787614746833
+      }
+    ],
+    "4.1 Crear `app/robots.ts` — genera robots.txt con reglas de crawling": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605141154
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787609217314
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787609935425
+      }
+    ],
+    "4.2 Crear `app/sitemap.ts` — genera sitemap XML dinámico": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605141170
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787609945343
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787610719840
+      }
+    ],
+    "4.3 Escribir property tests para sitemap": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605141188
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787610728988
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787611348846
+      }
+    ],
+    "4.4 Crear `app/og/[...path]/route.tsx` — Route handler para imágenes OG dinámicas": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605141212
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787609218220
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787609936413
+      }
+    ],
+    "4.5 Crear `app/not-found.tsx` — Página 404 estilizada": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605141227
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787609219172
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787609937416
+      }
+    ],
+    "4.6 Crear `app/error.tsx` — Error boundary estilizado": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605141243
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787609220008
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787609938394
+      }
+    ],
+    "5.1 Actualizar `next.config.ts` con images.remotePatterns para UEX": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605141260
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787609221107
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787609939560
+      }
+    ],
+    "5.2 Añadir `generateMetadata` en `app/mercancia/[name]/page.tsx`": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605141276
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787609945643
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787610721785
+      }
+    ],
+    "5.3 Escribir property tests para metadata de commodity": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605141292
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787610730283
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787611349733
+      }
+    ],
+    "5.4 Añadir `generateMetadata` en `app/wiki/[category]/[slug]/page.tsx`": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605141308
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787609946552
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787610723953
+      }
+    ],
+    "5.5 Escribir property tests para metadata de wiki": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605141323
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787610730771
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787611348071
+      }
+    ],
+    "5.6 Actualizar `app/layout.tsx` para incluir WebSite JSON-LD schema global": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605141340
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787609947543
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787610720840
+      }
+    ],
+    "6. Final checkpoint - Verificar integración completa": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787605141357
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787614751254
+      },
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787615210061
+      }
+    ],
+    "1. Crear módulos base de lib/seo": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787608635849
+      }
+    ],
+    "2. Crear componentes SEO": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787609211627
+      }
+    ],
+    "4. Crear archivos App Router SEO": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787611348869
+      }
+    ],
+    "5. Integrar SEO en rutas existentes": [
+      {
+        "executionId": "ce8218f5-f5ae-4ae0-8c03-507c6a13f877",
+        "chatSessionId": "sess_eaad8fb2-b6e0-40ad-b058-36438f07774d",
+        "timestamp": 1787611349760
+      }
+    ]
+  }
+}
