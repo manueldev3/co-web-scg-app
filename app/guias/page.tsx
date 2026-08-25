@@ -14,16 +14,23 @@ export default function GuiasPage() {
   const [guides, setGuides] = useState<Guide[]>([]);
   const [categories, setCategories] = useState<GuideCategory[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     async function load() {
-      const [guidesData, catsData] = await Promise.all([
-        getPublishedGuides(),
-        getCategories(),
-      ]);
-      setGuides(guidesData);
-      setCategories(catsData);
-      setLoading(false);
+      try {
+        const [guidesData, catsData] = await Promise.all([
+          getPublishedGuides(),
+          getCategories(),
+        ]);
+        setGuides(guidesData);
+        setCategories(catsData);
+      } catch (err) {
+        console.error("Error fetching guides:", err);
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
     }
     load();
   }, []);
@@ -82,6 +89,22 @@ export default function GuiasPage() {
           <div className="flex justify-center py-16">
             <Spin size="large" />
           </div>
+        ) : error ? (
+          <section className="text-center py-16 space-y-4">
+            <h2 className="text-xl font-semibold text-white">
+              Error al cargar las guías
+            </h2>
+            <p className="text-gray-400">
+              No pudimos cargar las guías en este momento. Intenta de nuevo en
+              unos minutos.
+            </p>
+            <button
+              onClick={() => window.location.reload()}
+              className="inline-block rounded-md bg-[#4a9eda] px-5 py-2 font-semibold text-[#0A1D29] cursor-pointer transition-colors hover:bg-[#9ED0FA]"
+            >
+              Reintentar
+            </button>
+          </section>
         ) : guides.length === 0 ? (
           <section className="text-center py-16">
             <p className="text-gray-400">

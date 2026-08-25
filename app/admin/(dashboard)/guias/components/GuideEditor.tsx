@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   Button,
@@ -142,13 +142,10 @@ export default function GuideEditor({ guide, categories }: GuideEditorProps) {
     setImageModalOpen(false);
   };
 
-  const customUpload = useCallback(
-    (options: { file: UploadFile | File }) => {
-      const file = options.file as File;
-      handleFileUpload(file);
-    },
-    [],
-  );
+  const customUpload = (options: { file: UploadFile | File }) => {
+    const file = options.file as File;
+    handleFileUpload(file);
+  };
 
   return (
     <div className="space-y-6">

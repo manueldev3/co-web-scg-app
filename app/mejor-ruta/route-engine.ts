@@ -201,6 +201,11 @@ export function buildCandidateRoutes(
         // (Requirements 3.3, 3.4, 3.7).
         // NOTE: scu_sell is frequently 0 in the UEX API even when demand exists;
         // scu_sell_stock (or scu_sell_avg) is the correct demand figure.
+        // When ALL demand fields are 0/absent, the demand cap is ignored
+        // (sellDemand falls back to shipCargoScu) because UEX data quality
+        // makes it impossible to distinguish "no demand data" from "genuine
+        // zero demand". This may generate routes to terminals with truly zero
+        // demand — an acceptable trade-off given the API's data quirks.
         const affordable = investment / buy.price_buy;
         const sellDemand =
           sell.scu_sell_stock ?? sell.scu_sell_avg ?? sell.scu_sell;

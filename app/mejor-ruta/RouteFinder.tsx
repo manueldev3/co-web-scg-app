@@ -137,7 +137,7 @@ const RouteFinder: React.FC<RouteFinderProps> = ({ market }) => {
       commodities: market.commodities,
     });
     setRoutes(result);
-  }, [filters]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [filters, shipId, investment, market]);
 
   return (
     <div className="min-h-screen bg-[#040d16] text-white">

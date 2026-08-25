@@ -1,0 +1,24 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "nextjs-production-power",
+  "version": "1.0.0",
+  "description": "Expert Next.js development guidance for production applications, covering architecture, App Router, Server Components, data fetching, performance, security, APIs, SEO, testing and code review.",
+  "author": {
+    "name": "Manuel Fernandez",
+    "url": "https://manueldeveloper.com"
+  },
+  "keywords": [
+    "nextjs", "next.js", "next", "react", "app router", "server component",
+    "client component", "server action", "route handler", "data fetching",
+    "caching", "revalidation", "performance", "core web vitals", "LCP", "CLS",
+    "INP", "bundle size", "hydration", "security", "authentication",
+    "authorization", "session", "CSRF", "XSS", "SEO", "metadata", "sitemap",
+    "open graph", "canonical", "structured data", "API", "endpoint",
+    "middleware", "testing", "vitest", "jest", "playwright",
+    "react testing library", "code review", "audit", "production readiness",
+    "architecture", "layout", "routing", "typescript", "component",
+    "streaming", "suspense"
+  ],
+  "repository": "https://github.com/manueldev3/nextjs-production-power",
+  "license": "MIT"
+}

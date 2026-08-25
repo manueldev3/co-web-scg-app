@@ -57,9 +57,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let cancelled = false;
+
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser: User | null) => {
       if (firebaseUser) {
         const role = await fetchUserRole(firebaseUser.uid);
+        // Guard against stale callbacks: if auth state changed while
+        // fetchUserRole was in-flight, discard this result.
+        if (cancelled) return;
+        if (auth.currentUser?.uid !== firebaseUser.uid) return;
         setUser({
           uid: firebaseUser.uid,
           email: firebaseUser.email,
@@ -67,12 +73,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           role,
         });
       } else {
+        if (cancelled) return;
         setUser(null);
       }
       setLoading(false);
     });
 
-    return unsubscribe;
+    return () => {
+      cancelled = true;
+      unsubscribe();
+    };
   }, []);
 
   const signIn = async (email: string, password: string) => {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, notFound } from "next/navigation";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 import { Spin } from "antd";
 import ReactMarkdown from "react-markdown";
@@ -15,17 +15,23 @@ export default function GuiaSlugPage() {
 
   const [guide, setGuide] = useState<Guide | null>(null);
   const [loading, setLoading] = useState(true);
-  const [notFoundState, setNotFoundState] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function load() {
-      const data = await getGuideBySlug(slug);
-      if (!data || !data.published) {
-        setNotFoundState(true);
-      } else {
-        setGuide(data);
+      try {
+        const data = await getGuideBySlug(slug);
+        if (!data || !data.published) {
+          setError("not-found");
+        } else {
+          setGuide(data);
+        }
+      } catch (err) {
+        console.error("Error fetching guide:", err);
+        setError("fetch-error");
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     }
     load();
   }, [slug]);
@@ -38,8 +44,52 @@ export default function GuiaSlugPage() {
     );
   }
 
-  if (notFoundState || !guide) {
-    notFound();
+  if (error === "not-found" || !guide) {
+    return (
+      <div className="min-h-screen bg-[#040d16] flex items-center justify-center px-4">
+        <div className="text-center space-y-4">
+          <h1 className="text-5xl font-bold text-[#9ED0FA]">404</h1>
+          <h2 className="text-xl font-semibold text-white">
+            Guía no encontrada
+          </h2>
+          <p className="text-gray-400 max-w-md">
+            La guía que buscas no existe o aún no ha sido publicada.
+          </p>
+          <div className="pt-4">
+            <Link
+              href="/guias"
+              className="inline-block rounded-md bg-[#4a9eda] px-5 py-2 font-semibold text-[#0A1D29] no-underline transition-colors hover:bg-[#9ED0FA]"
+            >
+              Ver todas las guías
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error === "fetch-error") {
+    return (
+      <div className="min-h-screen bg-[#040d16] flex items-center justify-center px-4">
+        <div className="text-center space-y-4">
+          <h2 className="text-xl font-semibold text-white">
+            Error al cargar la guía
+          </h2>
+          <p className="text-gray-400 max-w-md">
+            No pudimos cargar esta guía en este momento. Intenta de nuevo en
+            unos minutos.
+          </p>
+          <div className="pt-4">
+            <button
+              onClick={() => window.location.reload()}
+              className="inline-block rounded-md bg-[#4a9eda] px-5 py-2 font-semibold text-[#0A1D29] cursor-pointer transition-colors hover:bg-[#9ED0FA]"
+            >
+              Reintentar
+            </button>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
