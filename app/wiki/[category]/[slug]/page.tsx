@@ -1,5 +1,38 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { getCategory } from "../../registry";
+import { buildMetadata } from "@/lib/seo/metadata";
 import DetailView from "./DetailView";
+
+/**
+ * generateMetadata — genera metadatos SEO dinámicos para la página de detalle
+ * de un elemento de la wiki (Req 11.2, 11.3, 11.4, 11.5).
+ */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ category: string; slug: string }>;
+}): Promise<Metadata> {
+  const { category: categoryId, slug } = await params;
+  const category = getCategory(categoryId);
+
+  if (!category || category.status !== "active") {
+    notFound();
+  }
+
+  const detail = await category.loadDetail(slug);
+
+  if (!detail) {
+    notFound();
+  }
+
+  return buildMetadata({
+    title: `${detail.title} - ${category.label} Star Citizen | SCG`,
+    description: `Información detallada sobre ${detail.title} en Star Citizen: especificaciones, precios y más.`,
+    path: `/wiki/${categoryId}/${slug}`,
+    ogType: "product",
+  });
+}
 
 /**
  * Detalle_Elemento — Server Component genérico (Req 5.1, 5.6).
