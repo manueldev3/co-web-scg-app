@@ -92,6 +92,23 @@ export function defaultFilters(): RouteFilters {
 }
 
 /**
+ * Builds a short location string from a price record's location fields.
+ * Prefers: planet/moon > city/station > outpost. Omits star system for brevity.
+ * Example: "microTech > Port Tressler" or "ArcCorp > Area18"
+ */
+function buildTerminalLocation(record: ApiPriceRecord): string {
+  const parts: string[] = [];
+  // Planet or moon as the parent body
+  if (record.planet_name) parts.push(record.planet_name);
+  if (record.moon_name) parts.push(record.moon_name);
+  // Specific location within: city, station, or outpost
+  if (record.city_name) parts.push(record.city_name);
+  if (record.space_station_name) parts.push(record.space_station_name);
+  if (record.outpost_name) parts.push(record.outpost_name);
+  return parts.join(" > ");
+}
+
+/**
  * Standard Star Citizen cargo container sizes, in SCU. Used as the default
  * `boxSizesScu` for a route's commodity because the UEX price record does not
  * expose per-commodity container availability. The box-size filter (task 6.1)
@@ -182,9 +199,13 @@ export function buildCandidateRoutes(
         // Quantity sizing: bounded by ship cargo, affordable amount,
         // supply at the buy terminal, and demand at the sell terminal
         // (Requirements 3.3, 3.4, 3.7).
+        // NOTE: scu_sell is frequently 0 in the UEX API even when demand exists;
+        // scu_sell_stock (or scu_sell_avg) is the correct demand figure.
         const affordable = investment / buy.price_buy;
+        const sellDemand =
+          sell.scu_sell_stock ?? sell.scu_sell_avg ?? sell.scu_sell;
         const qty = Math.floor(
-          Math.min(shipCargoScu, affordable, buy.scu_buy, sell.scu_sell),
+          Math.min(shipCargoScu, affordable, buy.scu_buy, sellDemand > 0 ? sellDemand : shipCargoScu),
         );
 
         if (qty <= 0) continue;
@@ -201,8 +222,10 @@ export function buildCandidateRoutes(
           commodityTypeId: null,
           buyTerminalId: buy.id_terminal,
           buyTerminalName: buy.terminal_name,
+          buyTerminalLocation: buildTerminalLocation(buy),
           sellTerminalId: sell.id_terminal,
           sellTerminalName: sell.terminal_name,
+          sellTerminalLocation: buildTerminalLocation(sell),
           factionId: buy.id_faction > 0 ? buy.id_faction : null,
           quantityScu: qty,
           buyValue,
@@ -458,13 +481,17 @@ export function computeRoutes(input: EngineInput): TradeRoute[] {
   //  - commodityTypeId  ← `id_parent` from the commodity catalogue.
   //  - factionId        ← the buy terminal's faction (when the price record
   //                        itself didn't already provide one).
+  //  - terminal locations ← from terminal metadata (bulk prices endpoint
+  //                          doesn't include location fields).
   const typeByCommodity = new Map<number, number | null>();
   for (const c of input.commodities ?? []) {
     typeByCommodity.set(c.id, c.id_parent ?? null);
   }
   const factionByTerminal = new Map<number, number | null>();
+  const locationByTerminal = new Map<number, string>();
   for (const t of input.terminals) {
     factionByTerminal.set(t.id, t.factionId ?? null);
+    locationByTerminal.set(t.id, t.location);
   }
 
   const enriched = candidates.map((route) => ({
@@ -473,6 +500,10 @@ export function computeRoutes(input: EngineInput): TradeRoute[] {
       route.commodityTypeId ?? typeByCommodity.get(route.commodityId) ?? null,
     factionId:
       route.factionId ?? factionByTerminal.get(route.buyTerminalId) ?? null,
+    buyTerminalLocation:
+      route.buyTerminalLocation || locationByTerminal.get(route.buyTerminalId) || "",
+    sellTerminalLocation:
+      route.sellTerminalLocation || locationByTerminal.get(route.sellTerminalId) || "",
   }));
 
   const filtered = applyFilters(enriched, input.filters, input.terminals);

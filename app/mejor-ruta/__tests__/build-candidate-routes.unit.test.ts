@@ -295,7 +295,9 @@ describe("buildCandidateRoutes", () => {
     ).toEqual([]);
   });
 
-  it("produces no route when there is zero demand at the sell terminal", () => {
+  it("produces a route even with scu_sell=0 when scu_sell_stock is unavailable (API quirk fallback)", () => {
+    // scu_sell is frequently 0 in the UEX API even when demand exists.
+    // The engine now ignores the demand cap when all demand fields are 0/absent.
     const buyTerminal = makeRecord({
       id: 1,
       id_terminal: 1,
@@ -306,12 +308,13 @@ describe("buildCandidateRoutes", () => {
       id: 2,
       id_terminal: 2,
       price_sell: 150,
-      scu_sell: 0, // no demand -> qty 0
+      scu_sell: 0, // unreliable field — should not block the route
     });
 
-    expect(
-      buildCandidateRoutes([buyTerminal, sellTerminal], 30, 10000),
-    ).toEqual([]);
+    const routes = buildCandidateRoutes([buyTerminal, sellTerminal], 30, 10000);
+    // Route is produced; qty bounded by ship cargo (30) and supply (50) and affordable (100)
+    expect(routes.length).toBe(1);
+    expect(routes[0].quantityScu).toBe(30); // bounded by shipCargoScu
   });
 
   it("produces no route when buy and sell happen at the same terminal", () => {

@@ -209,7 +209,10 @@ const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
         "Selecciona facciones",
       )}
 
-      {/* Minimum security (Req 6.1) */}
+      {/* Minimum security — disabled: the UEX terminals API does not expose
+          a numeric security_level field, so all terminals default to 0 and
+          this filter would either do nothing or exclude everything. */}
+      {/*
       <div className={sectionClass}>
         <label className={labelClass}>Seguridad mínima</label>
         <Select<number | null>
@@ -223,6 +226,7 @@ const FiltersSidebar: React.FC<FiltersSidebarProps> = ({
           }
         />
       </div>
+      */}
 
       {/* Supported box size (Req 6.3) */}
       <div className={sectionClass}>

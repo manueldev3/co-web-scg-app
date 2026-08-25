@@ -57,8 +57,13 @@ export default function RouteResults({
       dataIndex: "buyTerminalName",
       key: "buyTerminalName",
       ellipsis: true,
-      render: (name: string) => (
-        <span className="font-medium text-gray-100">{name}</span>
+      render: (_: string, record: TradeRoute) => (
+        <div>
+          <span className="font-medium text-gray-100">{record.buyTerminalName}</span>
+          {record.buyTerminalLocation && (
+            <span className="block text-xs text-gray-400">{record.buyTerminalLocation}</span>
+          )}
+        </div>
       ),
     },
     {
@@ -71,8 +76,13 @@ export default function RouteResults({
       dataIndex: "sellTerminalName",
       key: "sellTerminalName",
       ellipsis: true,
-      render: (name: string) => (
-        <span className="font-medium text-gray-100">{name}</span>
+      render: (_: string, record: TradeRoute) => (
+        <div>
+          <span className="font-medium text-gray-100">{record.sellTerminalName}</span>
+          {record.sellTerminalLocation && (
+            <span className="block text-xs text-gray-400">{record.sellTerminalLocation}</span>
+          )}
+        </div>
       ),
     },
     {
