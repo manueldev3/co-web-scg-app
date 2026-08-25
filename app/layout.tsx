@@ -6,6 +6,8 @@ import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
 import SCGLayout from "./components/SCGLayout";
 import Script from "next/script";
+import { JsonLd } from "@/lib/seo/components/JsonLd";
+import { buildWebSiteSchema } from "@/lib/seo/schemas";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,6 +47,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <JsonLd data={buildWebSiteSchema() as Record<string, unknown>} />
         {/* 2. Colocas el script de Google dentro de <head> o directamente en el body */}
         <Script
           async
