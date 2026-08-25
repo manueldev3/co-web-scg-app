@@ -57,6 +57,13 @@ export interface RawTerminal extends ApiTerminal {
   max_container_size?: number | null;
   id_faction?: number | null;
   faction_name?: string | null;
+  // Location fields from the terminals endpoint
+  star_system_name?: string | null;
+  planet_name?: string | null;
+  moon_name?: string | null;
+  city_name?: string | null;
+  space_station_name?: string | null;
+  outpost_name?: string | null;
 }
 
 /**
@@ -135,9 +142,18 @@ export async function fetchVehicles(): Promise<ApiVehicle[]> {
  *     Hidden_Location (not publicly listed).
  */
 function toTerminalMeta(t: RawTerminal): TerminalMeta {
+  // Build a short location string: planet/moon > city/station/outpost
+  const locationParts: string[] = [];
+  if (t.planet_name) locationParts.push(t.planet_name);
+  if (t.moon_name) locationParts.push(t.moon_name);
+  if (t.city_name) locationParts.push(t.city_name);
+  if (t.space_station_name) locationParts.push(t.space_station_name);
+  if (t.outpost_name) locationParts.push(t.outpost_name);
+
   return {
     id: t.id,
     name: t.name,
+    location: locationParts.join(" > "),
     securityLevel: typeof t.security_level === "number" ? t.security_level : 0,
     isHidden: t.is_visible === 0,
     factionId: typeof t.id_faction === "number" && t.id_faction > 0 ? t.id_faction : null,

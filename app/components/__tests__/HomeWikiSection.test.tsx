@@ -41,6 +41,7 @@ vi.mock("@ant-design/icons", () => {
     RocketOutlined: Icon,
     SafetyCertificateOutlined: Icon,
     ThunderboltOutlined: Icon,
+    GiftOutlined: Icon,
   };
 });
 

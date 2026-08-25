@@ -15,6 +15,7 @@ export interface ApiVehicle {
 export interface TerminalMeta {
   id: number;
   name: string;
+  location: string; // ubicación jerárquica (ej: "microTech > Port Tressler")
   securityLevel: number; // nivel de seguridad numérico (mayor = más seguro)
   isHidden: boolean; // bandera Hidden_Location de UEX
   factionId: number | null; // id_faction de la terminal (0/ausente => null)
@@ -59,8 +60,10 @@ export interface TradeRoute {
   commodityTypeId: number | null;
   buyTerminalId: number;
   buyTerminalName: string;
+  buyTerminalLocation: string;
   sellTerminalId: number;
   sellTerminalName: string;
+  sellTerminalLocation: string;
   factionId: number | null;
   quantityScu: number; // cantidad comprada en SCU
   buyValue: number; // capital requerido, UEC
