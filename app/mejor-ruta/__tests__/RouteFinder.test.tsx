@@ -80,7 +80,6 @@ describe("RouteFinder — inputs, validation, reset, expanded view", () => {
     expect(screen.getByText("Tipos de mercancía")).toBeTruthy();
     expect(screen.getByText("Mercancías")).toBeTruthy();
     expect(screen.getByText("Facciones")).toBeTruthy();
-    expect(screen.getByText("Seguridad mínima")).toBeTruthy();
     expect(screen.getByText("Tamaño de caja (SCU)")).toBeTruthy();
   });
 

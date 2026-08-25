@@ -32,6 +32,9 @@ export interface ApiPriceRecord {
   scu_buy: number;
   scu_buy_max: number;
   scu_sell: number;
+  scu_sell_stock?: number;
+  scu_sell_stock_avg?: number;
+  scu_sell_avg?: number;
   scu_sell_max: number;
   commodity_name: string;
   commodity_slug: string;

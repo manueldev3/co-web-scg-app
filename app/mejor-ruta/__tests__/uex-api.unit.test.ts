@@ -163,7 +163,7 @@ describe("fetchMarketData — partial data on a single failing endpoint (Req 8.2
     expect(market.prices).toEqual(prices);
     // Terminals are normalized into TerminalMeta.
     expect(market.terminals).toEqual([
-      { id: 100, name: "Area18 TDD", securityLevel: 3, isHidden: false, factionId: null, factionName: null },
+      { id: 100, name: "Area18 TDD", location: "", securityLevel: 3, isHidden: false, factionId: null, factionName: null },
     ]);
     // The failing endpoint yields an empty array, not a thrown error.
     expect(market.vehicles).toEqual([]);
@@ -183,7 +183,7 @@ describe("fetchMarketData — partial data on a single failing endpoint (Req 8.2
     expect(market.commodities).toEqual(commodities);
     expect(market.vehicles).toEqual(vehicles);
     expect(market.terminals).toEqual([
-      { id: 100, name: "Area18 TDD", securityLevel: 3, isHidden: false, factionId: null, factionName: null },
+      { id: 100, name: "Area18 TDD", location: "", securityLevel: 3, isHidden: false, factionId: null, factionName: null },
     ]);
   });
 

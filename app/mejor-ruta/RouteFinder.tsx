@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Alert, Button, InputNumber, Select } from "antd";
 import {
   RocketOutlined,
@@ -102,6 +102,7 @@ const RouteFinder: React.FC<RouteFinderProps> = ({ market }) => {
     });
     setRoutes(result);
     setStatus("done");
+    hasComputedRef.current = true;
   };
 
   const handleReset = () => {
@@ -112,7 +113,31 @@ const RouteFinder: React.FC<RouteFinderProps> = ({ market }) => {
     setRoutes([]);
     setErrors({});
     setStatus("idle");
+    hasComputedRef.current = false;
   };
+
+  // Track whether a successful computation has occurred so filters can
+  // reactively recompute without the user clicking "Buscar rutas" again.
+  const hasComputedRef = useRef(false);
+
+  // When filters change AFTER a successful computation, reactively recompute.
+  useEffect(() => {
+    if (!hasComputedRef.current) return;
+    if (shipId === null || investment === null || investment <= 0) return;
+
+    const vehicle = (market.vehicles ?? []).find((v) => v.id === shipId);
+    const shipCargoScu = vehicle?.scu ?? 0;
+
+    const result = computeRoutes({
+      prices: market.prices,
+      terminals: market.terminals,
+      shipCargoScu,
+      investment,
+      filters,
+      commodities: market.commodities,
+    });
+    setRoutes(result);
+  }, [filters]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="min-h-screen bg-[#040d16] text-white">

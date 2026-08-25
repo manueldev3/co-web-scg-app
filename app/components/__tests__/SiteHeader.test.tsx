@@ -249,8 +249,8 @@ describe("SiteHeader — Wiki navigation entry", () => {
     expect(
       within(toolsMenu(container)).getByText("Herramientas para cargadores"),
     ).toBeTruthy();
-    // Order is preserved: Inicio (1), Herramientas (2), Wiki (3) appended last.
-    expect(topLevelKeys(container)).toEqual(["1", "2", "3"]);
+    // Order is preserved: Inicio (1), Herramientas (2), Wiki (3), Guías (4), Sobre nosotros (5), Contacto (6).
+    expect(topLevelKeys(container)).toEqual(["1", "2", "3", "4", "5", "6"]);
   });
 
   it("marks the Wiki entry as selected on /wiki (Req 1.3)", () => {
