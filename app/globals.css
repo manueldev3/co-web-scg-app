@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 /* Mapea las fuentes Geist (cargadas en layout.tsx con next/font) al sistema de
    temas de Tailwind v4, de modo que las utilidades `font-sans` / `font-mono`

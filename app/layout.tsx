@@ -8,6 +8,7 @@ import SCGLayout from "./components/SCGLayout";
 import Script from "next/script";
 import { JsonLd } from "@/lib/seo/components/JsonLd";
 import { buildWebSiteSchema } from "@/lib/seo/schemas";
+import { AuthProvider } from "@/lib/firebase/auth-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -58,7 +59,8 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <AntdRegistry>
-          <SCGLayout>
+          <AuthProvider>
+            <SCGLayout>
             <div className="h-10 flex items-center px-4 bg-[#0F2C3E]">
               <span className="text-[#82919E]">Guía de Star Citizen</span>
             </div>
@@ -67,6 +69,7 @@ export default function RootLayout({
             {children}
             <SiteFooter />
           </SCGLayout>
+          </AuthProvider>
         </AntdRegistry>
       </body>
     </html>
